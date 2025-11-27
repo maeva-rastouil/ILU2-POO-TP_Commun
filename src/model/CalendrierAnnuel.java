@@ -4,7 +4,7 @@ package model;
 public class CalendrierAnnuel {
 	private Mois[] calendrier;
 	
-	private CalendrierAnnuel() {
+	CalendrierAnnuel() {
 		calendrier = new Mois[12];
 		calendrier[0] = new Mois("Janvier", 31);
 		calendrier[1] = new Mois("Février", 28);
@@ -21,14 +21,16 @@ public class CalendrierAnnuel {
 	}
 	
 	public boolean estLibre(int jour, int mois) {
-		return false;
+		return calendrier[mois-1].estLibre(jour-1);
+			
 	}
 	
 	public boolean reserver(int jour, int mois) {
-		if (!estLibre.jours[mois]) {
-			return false;
+		if(estLibre(jour, mois)) {
+			calendrier[mois-1].reserver(jour-1);
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	//Class intern
@@ -44,12 +46,15 @@ public class CalendrierAnnuel {
 			}
 		}
 		
-		public boolean estlibre(int jour, int mois) {
-			return false;
+		public boolean estLibre(int jour) {
+			if(jours[jour] == false) {
+				return false;
+			}
+			return true;
 		}
 		
-		public boolean reserver(int jour, int mois) {
-			return true;
+		public void reserver(int jour) {
+			jours[jour] = false;
 		}	
 	}
 
